@@ -73,7 +73,8 @@ export default class YouTube extends React.Component {
 
   shouldComponentUpdate() {
     // Prevent unnecessary renders before the native component is ready to accept them
-    return this._isReady
+    if (this._isReady) return true;
+    else return false;
   }
 
   _onError = (event) => {
