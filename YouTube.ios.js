@@ -132,10 +132,6 @@ export default class YouTube extends React.Component {
     NativeModules.YouTubeManager.unMute(ReactNative.findNodeHandle(this));
   }
 
-  pauseVideo() {
-    NativeModules.YouTubeManager.pauseVideo(ReactNative.findNodeHandle(this));
-  }
-
   nextVideo() {
     NativeModules.YouTubeManager.nextVideo(ReactNative.findNodeHandle(this));
   }
