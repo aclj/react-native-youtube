@@ -39,16 +39,20 @@ public class YouTubeStandaloneModule extends ReactContextBaseJavaModule {
         public void onActivityResult(Activity activity, int requestCode, int resultCode, Intent intent) {
             if (requestCode == REQ_START_STANDALONE_PLAYER) {
                 if (mPickerPromise != null) {
-                    if (resultCode != Activity.RESULT_OK) {
-                        YouTubeInitializationResult errorReason =
-                            YouTubeStandalonePlayer.getReturnedInitializationResult(intent);
-                        if (errorReason.isUserRecoverableError()) {
-                            errorReason.getErrorDialog(activity, requestCode).show();
-                            mPickerPromise.reject(E_PLAYER_ERROR);
-                        } else {
-                            String errorMessage =
-                                String.format("There was an error initializing the YouTubePlayer (%1$s)", errorReason.toString());
-                            mPickerPromise.reject(E_PLAYER_ERROR, errorMessage);
+                    if (resultCode != Activity.RESULT_OK && intent != null) {
+                        try {
+                            YouTubeInitializationResult errorReason =
+                                YouTubeStandalonePlayer.getReturnedInitializationResult(intent);
+                            if (errorReason.isUserRecoverableError()) {
+                                errorReason.getErrorDialog(activity, requestCode).show();
+                                mPickerPromise.reject(E_PLAYER_ERROR);
+                            } else {
+                                String errorMessage =
+                                    String.format("There was an error initializing the YouTubePlayer (%1$s)", errorReason.toString());
+                                mPickerPromise.reject(E_PLAYER_ERROR, errorMessage);
+                            }
+                        } catch(RuntimeException e) {
+                            mPickerPromise.reject(E_PLAYER_ERROR, e);
                         }
                     } else {
                         mPickerPromise.resolve(null);
