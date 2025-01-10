@@ -160,6 +160,22 @@ export default class YouTube extends React.Component {
     );
   }
 
+  mute() {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this._nativeComponentRef.current),
+      UIManager.getViewManagerConfig('ReactYouTube').Commands.mute,
+      [],
+    );
+  }
+
+  unMute() {
+    UIManager.dispatchViewManagerCommand(
+      ReactNative.findNodeHandle(this._nativeComponentRef.current),
+      UIManager.getViewManagerConfig('ReactYouTube').Commands.unMute,
+      [],
+    );
+  }
+
   nextVideo() {
     UIManager.dispatchViewManagerCommand(
       ReactNative.findNodeHandle(this._nativeComponentRef.current),
