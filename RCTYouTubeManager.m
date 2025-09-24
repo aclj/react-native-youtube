@@ -12,6 +12,8 @@ RCT_EXPORT_MODULE();
     return [[RCTYouTube alloc] initWithBridge:self.bridge];
 }
 
+@synthesize methodQueue = _methodQueue;
+
 - (dispatch_queue_t)methodQueue {
     return _bridge.uiManager.methodQueue;
 }
